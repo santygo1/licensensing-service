@@ -24,7 +24,7 @@ public class LicenseService {
         String responseMessage = null;
         if (license != null){
             license.setOrganizationId(organizationId);
-            responseMessage = String.format("This is the post and the object is: %s", license);
+            responseMessage = String.format("This is the POST and the object is: %s", license);
         }
         return responseMessage;
     }
@@ -33,7 +33,7 @@ public class LicenseService {
         String responseMessage = null;
         if (license != null){
             license.setOrganizationId(organizationId);
-            responseMessage = String.format("This is put and the object is: %s", license);
+            responseMessage = String.format("This is PUT and the object is: %s", license);
         }
         return responseMessage;
     }
