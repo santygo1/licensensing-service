@@ -1,9 +1,11 @@
 package ru.danilspirin.license.service;
 
+import org.springframework.stereotype.Service;
 import ru.danilspirin.license.model.License;
 
 import java.util.Random;
 
+@Service
 public class LicenseService {
 
     public License getLicense(String licenseId, String organizationId){

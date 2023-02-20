@@ -1,8 +1,6 @@
 package ru.danilspirin.license.controller;
 
-import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.danilspirin.license.model.License;
@@ -13,7 +11,7 @@ import ru.danilspirin.license.service.LicenseService;
 @RequiredArgsConstructor
 public class LicenseController {
 
-    private @Nonnull LicenseService licenseService;
+    private final LicenseService licenseService;
 
     @GetMapping("/{licenseId}")
     public ResponseEntity<License> getLicense(
