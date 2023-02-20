@@ -8,6 +8,9 @@ import ru.danilspirin.license.service.LicenseService;
 
 import java.util.Locale;
 
+//Вспомогательный класс предназначенный для создания ссылок на классы контроллеров
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 @RestController  // Аннотация сообщает, что это REST служба, и она автоматически сериализует/десериализует запросы в JSON
 @RequestMapping("v1/organization/{organizationId}/license")
 @RequiredArgsConstructor
@@ -22,6 +25,18 @@ public class LicenseController {
 
         // Получаем из сервиса лицензию, пока что создается статично
         License license = licenseService.getLicense(licenseId, organizationId);
+
+        // Создаем конфигурацию HATEOAS
+        license.add(
+                linkTo(methodOn(LicenseController.class).getLicense(organizationId, license.getLicenseId()))
+                        .withSelfRel(),
+                linkTo(methodOn(LicenseController.class).createLicense(organizationId,license,null))
+                        .withRel("createLicense"),
+                linkTo(methodOn(LicenseController.class).updateLicense(organizationId, license, null))
+                        .withRel("updateLicense"),
+                linkTo(methodOn(LicenseController.class).getLicense(organizationId, license.getLicenseId()))
+                        .withRel("deleteLicense")
+        );
 
         // Так как сервис всегда возвращает лицензию, возвращаем код 200 с телом лицензии.
         return ResponseEntity.ok(license);
