@@ -52,39 +52,19 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-
-            <!-- Этот плагин используется для создания образа Docker и его публикация в Docker Hub -->
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>1.4.13</version>
 
                 <configuration>
-                    <!-- Задает имя удаленного репозитория -->
-                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
-
-                    <!-- Задает тег с версией проекта -->
-                    <tag>${project.version}</tag>
-
-                    <!-- Задаем местоположение файла JAR -->
-                    <buildArgs>
-                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-                    </buildArgs>
+                    <image>
+                        <!-- Изменяем имя для image, который генерируется Buildpacks -->
+                        <name>${docker.image.prefix}/${project.artifactId}:latest</name>
+                    </image>
+                    <layers>
+                        <!-- Подключаем поддержку слоев для плагина -->
+                        <enabled>true</enabled>
+                    </layers>
                 </configuration>
-
-                <executions>
-                    <execution>
-                        <id>default</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>build</goal>
-                            <goal>push</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
+
         </plugins>
     </build>
 
