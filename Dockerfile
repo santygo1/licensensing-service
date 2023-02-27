@@ -1,28 +1,28 @@
+# Первый уровень
 FROM openjdk:17-slim as build
-LABEL maintainer="Spirin Danil <danilkaspirin@gmail.com>"
+MAINTAINER "Spirin Danil <danilkaspirin@gmail.com>"
 
-# Определяем рабочую директорию в контейнере
-WORKDIR application
-
-# Путь к файлу JAR
-ARG JAR_FILE=target/license-service.jar
+# Передаем в параметре запуска переменную указывающую на файл приложения
+ARG JAR_FILE
 
 # Добавляет файлы в контейнер
-COPY ${JAR_FILE} application.jar
+COPY ${JAR_FILE} app.jar
 
-# Распаковывает файл jar
-RUN java -Djarmode=layertools -jar application.jar extract
+# Распаковывает файл jar в папку target/dependency
+# Параметр mkdir -p: Не вызывать ошибок если существует; Создает родительские каталоги
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf /app.jar)
 
-#Та же среда выполнения
+# Уровень два
+# Та же среда выполнения
 FROM openjdk:17-slim
 # Скопировать распакованное приложение в новый контейнер
 # (Копирует отдельные слои(см многослойные файлы JAR) из первого образа с именем build)
-WORKDIR application
-COPY --from=build application/dependencies/ ./
-COPY --from=build application/spring-boot-loader/ ./
-COPY --from=build application/snapshot-dependencies/ ./
-COPY --from=build application/application/ ./
+VOLUME /tmp
+
+ARG DEPENDENCY=/target/dependency
+COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 
 # Запускаем приложение
-# Используем org.springframework.boot.loader .JarLauncher для запуска
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+ENTRYPOINT ["java", "-cp", "app:app/lib/*","ru.danilspirin.license.LicensingServiceApplication"]

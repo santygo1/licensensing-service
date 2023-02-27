@@ -3,7 +3,7 @@ version: '3.7'
 services:
   licensing-service:
     # Собираем образ
-    image: santygo77/licensing-service:latest
+    image: santygo77/license-service:0.0.1-SNAPSHOT
 
     # Прокидываем порты
     ports:
@@ -12,14 +12,3 @@ services:
     # Определяем переменную окружения
     environment:
       - "SPRIGN_PROFILES_ACTIVE=dev"
-
-    networks:
-      # Называет сеть, к которой принадлежит сервис
-      backend:
-        aliases:
-          - "licenseservice" # Задает альтернативное имя хоста для службы в сети
-
-# Создает настраиваемую сеть с именем backend и с типом bridge по умолчанию
-networks:
-  backend:
-    driver: bridge
