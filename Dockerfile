@@ -15,8 +15,8 @@ RUN mkdir -p target/dependency && (cd target/dependency; jar -xf /app.jar)
 # Уровень два
 # Та же среда выполнения
 FROM openjdk:17-slim
-# Скопировать распакованное приложение в новый контейнер
-# (Копирует отдельные слои(см многослойные файлы JAR) из первого образа с именем build)
+
+# Монтируем том
 VOLUME /tmp
 
 ARG DEPENDENCY=/target/dependency
