@@ -60,6 +60,8 @@
                 <version>1.4.13</version>
                 <executions>
                     <execution>
+                        <id>default</id>
+                        <phase>install</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
