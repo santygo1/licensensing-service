@@ -62,7 +62,6 @@
                     <execution>
                         <goals>
                             <goal>build</goal>
-                            <goal>push</goal>
                         </goals>
                     </execution>
                 </executions>
