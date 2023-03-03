@@ -9,6 +9,6 @@ services:
     ports:
       - "8080:8080"
 
-    # Определяем переменную окружения
+    # Определяем переменную окружения (профиль)
     environment:
-      - "SPRIGN_PROFILES_ACTIVE=dev"
+      - "SPRING_PROFILES_ACTIVE=dev"
