@@ -1,1 +1,8 @@
-
+spring:
+  application:
+    name: licensing-service # Напрямую должно соответствовать каталогу конфигураций в Spring Cloud Conf Server
+  profiles:
+    active: dev # Профиль с которым запускается данная служба
+  # Подключение к config-server
+  config:
+    import: optional:configserver:http://localhost:8071
