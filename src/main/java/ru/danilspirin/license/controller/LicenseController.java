@@ -43,30 +43,28 @@ public class LicenseController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createLicense(
+    public ResponseEntity<License> createLicense(
             @PathVariable String organizationId,
             @RequestBody License license, // Аннотация @RequestBody отображает тело запроса в объект License
             @RequestHeader(value = "Accept-Language", required = false) Locale locale){
 
-        return ResponseEntity.ok(licenseService.createLicense(license, organizationId, locale));
+        return ResponseEntity.ok(licenseService.createLicense(license));
     }
 
     @PutMapping
-    public ResponseEntity<String> updateLicense(
+    public ResponseEntity<License> updateLicense(
             @PathVariable String organizationId,
             @RequestBody License license,
             @RequestHeader(value = "Accept-Language", required = false) Locale locale){
 
-        return ResponseEntity.ok(licenseService.updateLicense(license, organizationId, locale));
+        return ResponseEntity.ok(licenseService.updateLicense(license));
     }
 
     @DeleteMapping("/{licenseId}")
     public ResponseEntity<String> deleteLicense(
-            @PathVariable("organizationId") String organizationId,
             @PathVariable("licenseId") String licenseId,
             @RequestHeader(value = "Accept-Language", required = false) Locale locale){
-
-        return ResponseEntity.ok(licenseService.deleteLicense(licenseId, organizationId, locale));
+        return ResponseEntity.ok(licenseService.deleteLicense(licenseId, locale));
     }
 
 }
