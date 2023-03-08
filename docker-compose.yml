@@ -12,3 +12,4 @@ services:
     # Определяем переменную окружения (профиль)
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
+      - "SPRING_CONFIG_IMPORT=optional:configserver:http://localhost:8888"
