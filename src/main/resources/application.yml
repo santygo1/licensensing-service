@@ -6,3 +6,12 @@ spring:
   # Подключение к config-server
   config:
     import: optional:configserver:http://localhost:8071
+
+# Отображение значений переменных сред
+management:
+  endpoint:
+    env:
+      show-values: always
+  info:
+    env:
+      enabled: true
